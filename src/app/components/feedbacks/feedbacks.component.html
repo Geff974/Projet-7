@@ -1,0 +1,7 @@
+<h4 class="offset-2">{{ nameRestaurant }}</h4>
+
+<div *ngFor="let review of reviews" id="divReviewa">
+  <h6>{{ review.author_name }} - {{ review.rating }} / 5</h6>
+  <p>{{ review.text }}</p>
+</div>
+<!-- <button type="button" class="btn btn-primary" (click)="testFunction()">Bouton test</button> -->

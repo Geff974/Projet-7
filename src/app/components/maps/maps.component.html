@@ -1,0 +1,15 @@
+<google-map height="600px" width="100%" [zoom]="zoom" [center]="center" [options]="options"
+  (mapDragend)="actualizeWhenDrag()" (mapClick)="mapClick($event)">
+  <map-marker #markerElem *ngFor="let marker of listRestaurantFull" [position]="marker.geometry.location"
+    (mapClick)="infoWind(markerElem, marker)">
+  </map-marker>
+  <map-marker [position]="userPosition" [label]="'Utilisateur'"></map-marker>
+  <map-info-window>
+    <h5>{{ infoContent.name }}</h5>
+    <p>{{ infoContent.address }}</p>
+  </map-info-window>
+</google-map>
+
+<button type="button" class="btn btn-secondary" (click)="addRestaurantJSON()">
+  Charger la liste des restaurant
+</button>

@@ -1,0 +1,12 @@
+li {
+  border-radius: 5px;
+  // box-shadow: 1px 1px 3px rgb(172, 171, 171), -1px -1px 3px rgb(172, 171, 171),
+  //   -1px 1px 3px rgb(172, 171, 171), 1px -1px 3px rgb(172, 171, 171);
+  padding: 0.5em 1em;
+  box-shadow: 2px 1px 3px rgb(136, 134, 134), -2px -1px 3px rgb(253, 252, 252);
+  cursor: pointer;
+}
+
+li:hover {
+  box-shadow: 3px 2px 3px rgb(135, 136, 134), -2px -1px 3px rgb(223, 222, 222);
+}

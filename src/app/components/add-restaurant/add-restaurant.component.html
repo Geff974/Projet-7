@@ -1,0 +1,25 @@
+<form>
+  <div class="form-row">
+    <div class="form-group col-md-6">
+      <label for="inputName">Nom du restaurant</label>
+      <input type="text" id="inputName" name="name" class="form-control" [(ngModel)]="restaurantToAdd.name">
+    </div>
+    <div class="form-group col-md-6">
+      <label for="inputAddress">Adresse</label>
+      <input type="text" id="inputAddress" name="address" class="form-control" [(ngModel)]="restaurantToAdd.address">
+    </div>
+  </div>
+  <fieldset disabled>
+    <div class="form-row">
+      <div class="form-group col-md-4">
+        <label for="latitudeTextInput">Latitude</label>
+        <input type="text" id="latitudeTextInput" class="form-control" placeholder={{Latitude}}>
+      </div>
+      <div class="form-group col-md-4">
+        <label for="longitudeTextInput">Longitude</label>
+        <input type="text" id="longitudeTextInput" class="form-control" placeholder={{Longitude}}>
+      </div>
+    </div>
+  </fieldset>
+  <button type="button" class="btn btn-primary" (click)="addRest()">Submit</button>
+</form>

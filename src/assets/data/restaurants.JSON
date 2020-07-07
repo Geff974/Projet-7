@@ -1,0 +1,73 @@
+[{
+    "id": 1,
+    "name": "Bronco",
+    "address": "39 Rue des Petites Écuries, 75010 Paris",
+    "geometry": {
+      "location": {
+        "lat": 48.8737815,
+        "lng": 2.3501649
+      }
+    },
+    "ratings": [{
+        "author_name": "inconnu",
+        "rating": 4,
+        "text": "Un excellent restaurant, j'y reviendrai ! Par contre il vaut mieux aimer la viande."
+      },
+      {
+        "author_name": "inconnu",
+        "rating": 5,
+        "text": "Tout simplement mon restaurant préféré !"
+      }
+    ],
+    "rating": 0,
+    "place_id": "placeID1"
+  },
+  {
+    "id": 2,
+    "name": "Babalou",
+    "address": "4 Rue Lamarck, 75018 Paris",
+    "geometry": {
+      "location": {
+        "lat": 48.8865035,
+        "lng": 2.3442197
+      }
+    },
+    "ratings": [{
+        "author_name": "inconnu",
+        "rating": 5,
+        "text": "Une minuscule pizzeria délicieuse cachée juste à côté du Sacré choeur !"
+      },
+      {
+        "author_name": "inconnu",
+        "rating": 3,
+        "text": "J'ai trouvé ça correct, sans plus"
+      }
+    ],
+    "rating": 0,
+    "place_id": "placeID2"
+  },
+  {
+    "id": 3,
+    "name": "Les bons enfants",
+    "address": "12 rue des bons enfants, 97410 st-Pierre",
+    "geometry": {
+      "location": {
+        "lat": -21.251537,
+        "lng": 55.5201656
+      }
+    },
+    "ratings": [{
+        "author_name": "inconnu",
+        "rating": 3,
+        "text": "Un excellent restaurant, j'y reviendrai ! Par contre il vaut mieux aimer la viande."
+      },
+      {
+        "author_name": "inconnu",
+        "rating": 4,
+        "text": "Tout simplement mon restaurant préféré !"
+      }
+    ],
+    "rating": 0,
+    "place_id": "placeID3"
+  }
+]

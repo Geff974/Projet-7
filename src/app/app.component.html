@@ -1,0 +1,37 @@
+<!-- TODO: Utiliser les tab de bootstrap -->
+
+<div class="row" id="principalBlock">
+  <div class="col-4" id="listRestaurant">
+    <app-list-restaurant></app-list-restaurant>
+  </div>
+  <div class="col-8" id="rightPart">
+    <app-maps></app-maps>
+    <div class="row">
+      <div class="col text-justify" id="divTab">
+        <div>
+          <a class="tab" (click)="tabSelector = 'feedbacks'"
+            [ngClass]="{activeTab: tabSelector == 'feedbacks'}">Commentaires</a>
+          <a class="tab" (click)="tabSelector = 'addComment'"
+            [ngClass]="{activeTab: tabSelector == 'addComment'}">Ajouter un commentaire</a>
+          <a class="tab" (click)="tabSelector = 'addRestaurant'"
+            [ngClass]="{activeTab: tabSelector == 'addRestaurant'}">Ajouter un restaurant</a>
+        </div>
+
+        <div class="contentTab">
+          <div>
+            <app-feedbacks *ngIf="tabSelector == 'feedbacks'"></app-feedbacks>
+          </div>
+          <div>
+            <app-add-comment *ngIf="tabSelector == 'addComment'"></app-add-comment>
+          </div>
+          <div>
+            <app-add-restaurant *ngIf="tabSelector == 'addRestaurant'"></app-add-restaurant>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<router-outlet></router-outlet>
