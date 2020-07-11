@@ -14,14 +14,13 @@ export class FeedbacksComponent implements OnInit {
   constructor(private restaurantsService: RestaurantsService) {}
 
   ngOnInit(): void {
-    this.checkAlreadyInit();
     this.restaurantsService.reviews.subscribe((dataReviews) => {
       this.reviews = dataReviews;
-      console.log('entrer dans la boucle');
     });
     this.restaurantsService.nameRestaurantReview.subscribe(
       (nameRest) => (this.nameRestaurant = nameRest)
     );
+    this.checkAlreadyInit();
   }
 
   checkAlreadyInit(): void {

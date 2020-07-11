@@ -12,6 +12,7 @@ import { FeedbacksComponent } from './components/feedbacks/feedbacks.component';
 import { AddRestaurantComponent } from './components/add-restaurant/add-restaurant.component';
 import { AddCommentComponent } from './components/add-comment/add-comment.component';
 import { FormsModule } from '@angular/forms';
+import { ImageStreetComponent } from './components/image-street/image-street.component';
 
 @NgModule({
   declarations: [
@@ -21,6 +22,7 @@ import { FormsModule } from '@angular/forms';
     FeedbacksComponent,
     AddRestaurantComponent,
     AddCommentComponent,
+    ImageStreetComponent,
   ],
   imports: [
     BrowserModule,

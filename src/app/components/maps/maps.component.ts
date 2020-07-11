@@ -1,14 +1,14 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, DoCheck } from '@angular/core';
 import { RestaurantsService } from 'src/app/services/restaurants.service';
 import { GoogleMap, MapInfoWindow, MapMarker } from '@angular/google-maps';
-import { IRequete, IResult, IRestaurants } from 'src/app/interface/restaurants';
+import { IRequete, IRestaurants } from 'src/app/interface/restaurants';
 
 @Component({
   selector: 'app-maps',
   templateUrl: './maps.component.html',
   styleUrls: ['./maps.component.scss'],
 })
-export class MapsComponent implements OnInit {
+export class MapsComponent implements OnInit, DoCheck {
   @ViewChild(GoogleMap, { static: false }) map: GoogleMap;
   @ViewChild(MapInfoWindow, { static: false }) info: MapInfoWindow;
   public infoContent = { name: '', address: '' };
@@ -40,11 +40,21 @@ export class MapsComponent implements OnInit {
 
   constructor(private restaurantsService: RestaurantsService) {}
 
+  ngDoCheck(): void {
+    try {
+      this.addRestaurantJSON();
+    } catch (e) {
+      console.log(e);
+    }
+  }
+
   ngOnInit(): void {
     this.restaurantsService.lat.subscribe((lat: number) => {
       this.latitude = lat;
       this.updateCenter();
     });
+
+    this.restaurantsService;
 
     this.restaurantsService.restaurantJSON.subscribe((resto) => {
       this.listRestaurantJSON = resto;
@@ -60,16 +70,24 @@ export class MapsComponent implements OnInit {
       this.listRestaurant = data;
     });
 
-    navigator.geolocation.getCurrentPosition((position) => {
-      this.restaurantsService.setPosition(
-        position.coords.latitude,
-        position.coords.longitude
-      );
-      this.userPosition = {
-        lat: position.coords.latitude,
-        lng: position.coords.longitude,
-      };
-    });
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        this.restaurantsService.setPosition(
+          position.coords.latitude,
+          position.coords.longitude
+        );
+        this.userPosition = {
+          lat: position.coords.latitude,
+          lng: position.coords.longitude,
+        };
+      },
+      () => {
+        alert(
+          "Votre geolocation n'est pas active. Position par default chargée."
+        );
+        this.restaurantsService.setPosition(48.85837, 2.294481);
+      }
+    );
   }
 
   updateCenter(): void {
@@ -80,10 +98,13 @@ export class MapsComponent implements OnInit {
   }
 
   infoWind(marker: MapMarker, markerInfo) {
+    this.restaurantsService.setImageSource(
+      markerInfo.geometry.location.lat,
+      markerInfo.geometry.location.lng
+    );
     this.infoContent.name = markerInfo.name;
     this.infoContent.address = markerInfo.vicinity;
     this.info.open(marker);
-    console.log(markerInfo);
     this.restaurantsService.getGoogReviews(markerInfo.place_id);
   }
 
@@ -98,6 +119,7 @@ export class MapsComponent implements OnInit {
   }
 
   actualizeWhenDrag() {
+    this.listRestaurantFull = [];
     this.restaurantsService.setPosition(
       this.map.getCenter().lat(),
       this.map.getCenter().lng()

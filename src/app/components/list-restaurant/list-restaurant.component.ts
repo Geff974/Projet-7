@@ -52,13 +52,14 @@ export class ListRestaurantComponent implements OnInit {
     const latitude = event.geometry.location.lat;
     const longitude = event.geometry.location.lng;
     this.restaurantsService.setPosition(latitude, longitude);
+    this.restaurantsService.setImageSource(latitude, longitude);
     this.restaurantsService.getGoogReviews(event.place_id);
   }
 
   filterRating(): void {
     this.listRestaurantFilter = [];
     this.listRestaurantTOTAL.forEach((resto) => {
-      if (resto.rating > this.minRating && resto.rating < this.maxRating) {
+      if (resto.rating >= this.minRating && resto.rating < this.maxRating) {
         this.listRestaurantFilter.push(resto);
       }
     });

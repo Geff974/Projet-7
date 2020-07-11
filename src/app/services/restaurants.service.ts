@@ -6,17 +6,20 @@ import {
   IResultReview,
   IReview,
 } from '../interface/restaurants';
-import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class RestaurantsService {
-  private latitude: number = 48.373347;
-  private longitude: number = 2.816429;
+  private latitude = 48.373347;
+  private longitude = 2.816429;
   private dataRestaurant: IRestaurants[];
   private listRestaurantJSONFiltre: IRestaurants[] = [];
   public placeID: string;
+  public latMin: number;
+  public latMax: number;
+  public lngMin: number;
+  public lngMax: number;
 
   @Output() lat: EventEmitter<number> = new EventEmitter();
   @Output() lng: EventEmitter<number> = new EventEmitter();
@@ -29,10 +32,10 @@ export class RestaurantsService {
   @Output() restaurantJSONFull: EventEmitter<
     IRestaurants[]
   > = new EventEmitter();
+  @Output() imageSource: EventEmitter<string> = new EventEmitter();
 
   private APIKey = '&key=AIzaSyA4u_brprhE8n3YbdKkVG4FWgcFIzJ9j-U';
-  private JSONFile: string =
-    'http://localhost:4200/assets/data/restaurants.JSON';
+  private JSONFile = 'http://localhost:4200/assets/data/restaurants.JSON';
   private googAPI = 'https://maps.googleapis.com/maps/api/place/';
   private nearbySearch: string = this.googAPI + 'nearbysearch/json?location=';
   private nearbySearchEnd: string =
@@ -40,8 +43,8 @@ export class RestaurantsService {
   private reviewSearch = this.googAPI + 'details/json?placeid=';
   private reviewSearchEnd = '&fields=review,name' + this.APIKey;
   private streetView =
-    'https://maps.googleapis.com/maps/api/streetview?size=80x80&location=';
-  private streetEnd = '&fov=80&heading=70&pitch=0' + this.APIKey;
+    'https://maps.googleapis.com/maps/api/streetview?size=400x200&location=';
+  private streetEnd = '&heading=180&pitch=10&fov=110' + this.APIKey;
   private proxyUrl = 'https://cors-anywhere.herokuapp.com/';
 
   constructor(private http: HttpClient) {}
@@ -54,9 +57,14 @@ export class RestaurantsService {
     this.getGoogRestaurant();
   }
 
-  setClickLatLng(lat: number, lng: number) {
+  setClickLatLng(lat: number, lng: number): void {
     this.latClick.emit(lat);
     this.lngClick.emit(lng);
+  }
+
+  setImageSource(lat: number, lng: number): void {
+    const source = this.streetView + lat + ',' + lng + this.streetEnd;
+    this.imageSource.emit(source);
   }
 
   getGoogRestaurant(): void {
@@ -75,7 +83,16 @@ export class RestaurantsService {
     return this.dataRestaurant;
   }
 
-  getJSONRestaurant(latMin, latMax, lngMin, lngMax) {
+  getJSONRestaurant(
+    latMin = this.latMin,
+    latMax = this.latMax,
+    lngMin = this.lngMin,
+    lngMax = this.lngMax
+  ) {
+    this.latMin = latMin;
+    this.latMax = latMax;
+    this.lngMin = lngMin;
+    this.lngMax = lngMax;
     this.listRestaurantJSONFiltre = [];
     this.dataRestaurant.forEach((element) => {
       const lat = element.geometry.location.lat;
@@ -108,19 +125,16 @@ export class RestaurantsService {
     this.placeID = placeID;
   }
 
-  getStreetView(lat: number, lng: number): Observable<object> {
-    const imgResto = this.http.get(
-      this.proxyUrl + this.streetView + lat + ',' + lng + this.streetEnd
-    );
+  getStreetView(lat: number, lng: number): string {
+    const imgResto =
+      this.proxyUrl + this.streetView + lat + ',' + lng + this.streetEnd;
     return imgResto;
   }
 
   putRestaurant(restaurant: IRestaurants): void {
     this.dataRestaurant.push(restaurant);
-    this.dataRestaurant.forEach((item: IRestaurants) => {
-      console.log(item);
-    });
-    this.loadDataRestaurant();
+    this.restaurantJSONFull.emit(this.dataRestaurant);
+    this.getJSONRestaurant();
   }
 
   putRating(rating: IReview): void {
@@ -139,16 +153,16 @@ export class RestaurantsService {
   }
 
   updateRating(id): void {
+    if (!this.dataRestaurant[id].ratings) {
+      return;
+    }
     let finalRating = 0;
     this.dataRestaurant[id].ratings.forEach((feedback) => {
       finalRating += feedback.rating;
     });
     finalRating = finalRating / this.dataRestaurant[id].ratings.length;
+    finalRating = Math.round(finalRating * 10) / 10;
     this.dataRestaurant[id].rating = finalRating;
-  }
-
-  showDataRestaurant(): void {
-    console.log(this.dataRestaurant);
   }
 
   loadDataRestaurant(): void {
@@ -160,6 +174,5 @@ export class RestaurantsService {
         this.dataRestaurant.forEach((resto) => this.updateRating(resto.id - 1));
       });
     this.restaurantJSONFull.emit(this.dataRestaurant);
-    console.log(this.dataRestaurant);
   }
 }

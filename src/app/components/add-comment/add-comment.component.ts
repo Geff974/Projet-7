@@ -9,7 +9,7 @@ import { IReview } from 'src/app/interface/restaurants';
 })
 export class AddCommentComponent implements OnInit {
   public name: string;
-  public rating: number = 0;
+  public rating = 0;
   public comment: string;
 
   constructor(private restaurantService: RestaurantsService) {}

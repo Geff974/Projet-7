@@ -1,5 +1,3 @@
-<!-- TODO: Utiliser les tab de bootstrap -->
-
 <div class="row" id="principalBlock">
   <div class="col-4" id="listRestaurant">
     <app-list-restaurant></app-list-restaurant>
@@ -15,6 +13,7 @@
             [ngClass]="{activeTab: tabSelector == 'addComment'}">Ajouter un commentaire</a>
           <a class="tab" (click)="tabSelector = 'addRestaurant'"
             [ngClass]="{activeTab: tabSelector == 'addRestaurant'}">Ajouter un restaurant</a>
+          <a class="tab" (click)="tabSelector = 'photo'" [ngClass]="{activeTab: tabSelector == 'photo'}">Photo</a>
         </div>
 
         <div class="contentTab">
@@ -26,6 +25,9 @@
           </div>
           <div>
             <app-add-restaurant *ngIf="tabSelector == 'addRestaurant'"></app-add-restaurant>
+          </div>
+          <div>
+            <app-image-street *ngIf="tabSelector == 'photo'"></app-image-street>
           </div>
         </div>
       </div>

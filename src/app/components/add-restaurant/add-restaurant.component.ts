@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { RestaurantsService } from 'src/app/services/restaurants.service';
 import { IRestaurants } from 'src/app/interface/restaurants';
-import { BoundAttribute } from '@angular/compiler/src/render3/r3_ast';
 
 @Component({
   selector: 'app-add-restaurant',
@@ -21,7 +20,7 @@ export class AddRestaurantComponent implements OnInit {
     place_id: '',
   };
   public address: string;
-  public name: string = 'test';
+  public name = 'test';
 
   constructor(private restaurantService: RestaurantsService) {}
 
