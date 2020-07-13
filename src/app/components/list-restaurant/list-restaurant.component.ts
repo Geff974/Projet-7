@@ -18,6 +18,7 @@ export class ListRestaurantComponent implements OnInit {
   };
   public minRating = 0;
   public maxRating = 5;
+  public restaurantName: string;
 
   constructor(private restaurantsService: RestaurantsService) {}
 

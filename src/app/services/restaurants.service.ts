@@ -13,6 +13,7 @@ import {
 export class RestaurantsService {
   private latitude = 48.373347;
   private longitude = 2.816429;
+  public nameRestaurant: string;
   private dataRestaurant: IRestaurants[];
   private listRestaurantJSONFiltre: IRestaurants[] = [];
   public placeID: string;
@@ -113,6 +114,7 @@ export class RestaurantsService {
       );
       this.reviews.emit(restaurant.ratings);
       this.nameRestaurantReview.emit(restaurant.name);
+      this.nameRestaurant = restaurant.name;
     } else {
       const googReview = this.http.get<IResultReview>(
         this.proxyUrl + this.reviewSearch + placeID + this.reviewSearchEnd
@@ -120,6 +122,7 @@ export class RestaurantsService {
       googReview.subscribe((dataReviews) => {
         this.reviews.emit(dataReviews.result.reviews);
         this.nameRestaurantReview.emit(dataReviews.result.name);
+        this.nameRestaurant = dataReviews.result.name;
       });
     }
     this.placeID = placeID;

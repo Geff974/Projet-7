@@ -18,8 +18,8 @@
 </form>
 
 <ul *ngFor="let item of listRestaurantFilter">
-  <li (click)="showInMap(item)">
-    <div class="row">
+  <li (click)="showInMap(item)" [ngClass]="{restaurantSelected: restaurantName == item.name}">
+    <div class="row" (click)="restaurantName = item.name">
       <h5 class="col"> {{ item.name }} </h5>
       <p class="col text-right">{{ item.rating }} / 5</p>
     </div>

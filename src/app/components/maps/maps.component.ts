@@ -54,8 +54,6 @@ export class MapsComponent implements OnInit, DoCheck {
       this.updateCenter();
     });
 
-    this.restaurantsService;
-
     this.restaurantsService.restaurantJSON.subscribe((resto) => {
       this.listRestaurantJSON = resto;
       this.loadRestaurantFull();
@@ -137,15 +135,12 @@ export class MapsComponent implements OnInit, DoCheck {
     if (!this.listRestaurantJSON) {
       return;
     }
+    this.listRestaurantFull = [];
     this.listRestaurantJSON.forEach((resto) =>
       this.listRestaurantFull.push(resto)
     );
     this.listRestaurant.results.forEach((resto) =>
       this.listRestaurantFull.push(resto)
     );
-  }
-
-  test() {
-    this.restaurantsService.getStreetView(this.latitude, this.longitude);
   }
 }
